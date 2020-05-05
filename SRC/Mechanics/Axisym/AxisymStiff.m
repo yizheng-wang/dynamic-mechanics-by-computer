@@ -19,13 +19,13 @@
 %*                                                                 *
 %* *****************************************************************
 
-function StrainStiff()
+function AxisymStiff()
 
 % Init variables of the element
 InitStrain();
 
 % Read Material and Elements
-planeReadStrain();
+AxisymReadStrain();
 
 fprintf('Solution phase ...\n\n');
 
@@ -42,7 +42,7 @@ if (cdata.MODEX == 0)
 end
 
 % Assemble structure stiffness matrix
-planeAssemble();
+AxisymAssemble();
 
 
 
@@ -54,7 +54,7 @@ end
 % Init parameters of truss element
 function InitStrain()
 global sdata;
-sdata.NNODE = 4;
+sdata.NNODE = 8;  %这里将4改成了8
 sdata.NDOF = 2;
 
 end

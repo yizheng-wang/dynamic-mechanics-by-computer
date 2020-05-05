@@ -41,6 +41,9 @@ else SPSTIFF = Stiff2Sparse(); end
 
 cdata.TIM(4,:) = clock;
 
+%轴对称单元的载荷需要乘以2*PI*R，所以增添一个判断语句来修正载荷,太复杂了，在输入*2*pi*r
+
+
 % Solve 
 for L = 1:NLCASE
 

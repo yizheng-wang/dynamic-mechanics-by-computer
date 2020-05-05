@@ -65,7 +65,7 @@ classdef SolutionData
         MK;       % Maximum half bandwidth
         MHT;      % int, MHT(NEQ), 每一自由度在总刚度阵中到对角线距离
         LM;       % int, LM(6, NUME), Connectivity matrix
-        MAXA;     % int, MAXA(NEQ)
+        MAXA;     % int, MAXA(NEQ),对角线元素的地址
         STIFF;    % double ,STIFF(NWK), store the elements of stiffness matrix
         
         % Result data

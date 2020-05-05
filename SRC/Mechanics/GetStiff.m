@@ -48,8 +48,8 @@ for N = 1:cdata.NUMEG
     if (NPAR1 == 1),TrussStiff()
         
     elseif (NPAR1 == 2), StrainStiff()
-
-    else, error(' *** ERROR *** No Such Element'); 
+    elseif (NPAR1 == 3), AxisymStiff()  %增添了8Q轴对称单元
+    else error(' *** ERROR *** No Such Element'); 
     end
 end
 

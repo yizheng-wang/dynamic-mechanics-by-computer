@@ -13,7 +13,7 @@
 %*                                                                 *
 %* *****************************************************************
 
-function ReadStrain()
+function planeReadStrain()
 
 % Read Material information
 ReadMaterial()

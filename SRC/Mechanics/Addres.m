@@ -26,7 +26,7 @@ global sdata;
 global cdata;
 
 NEQ = sdata.NEQ; MHT = sdata.MHT;
-sdata.MAXA = zeros(NEQ+1, 1, 'int64');
+sdata.MAXA = zeros(NEQ+1, 1, 'int64');  %从存的数目来看，应该和KF有关系
 MAXA = sdata.MAXA;
 
 MAXA(1) = 1;

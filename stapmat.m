@@ -21,7 +21,7 @@ cdata = ControlData;
 sdata = SolutionData;
 
 % Read InPut file
-fname = '1';              % Specify the file name
+fname = 'A1xisym-unipressure';              % Specify the file name
 ReadFile(fname);
 
 % Write basic data of program 
@@ -50,6 +50,7 @@ addpath .\SRC\BasicData
 addpath .\SRC\Mechanics
 addpath .\SRC\Mechanics\Truss
 addpath .\SRC\Mechanics\planestrain
+addpath .\SRC\Mechanics\Axisym
 addpath .\SRC\Solver
 end
 
