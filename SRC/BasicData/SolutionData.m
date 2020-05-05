@@ -53,6 +53,7 @@ classdef SolutionData
         % Material data
         NUMMAT;     % int, the number of types of material 
         E;          % double array, Young's Modulus
+        density;    % 质量密度
         PR;         % double array, possion ratio
         AREA;       % double array, cross-sectional constants
         MATP;       % int, MATP(NUME), types of elements
@@ -67,7 +68,8 @@ classdef SolutionData
         LM;       % int, LM(6, NUME), Connectivity matrix
         MAXA;     % int, MAXA(NEQ),对角线元素的地址
         STIFF;    % double ,STIFF(NWK), store the elements of stiffness matrix
-        
+        HMASS;    %协调质量阵
+        CMASS;    %集中质量阵
         % Result data
         DIS;      % double, DIS(NEQ, NLCASE), Displacement of nodes
         STRAIN;   % double, STRAIN(NEQ, NLCASE), Strain

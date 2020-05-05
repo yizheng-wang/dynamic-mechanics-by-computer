@@ -18,7 +18,7 @@
 %*                                                                 *
 %* *****************************************************************
 
-function ADDBAN(S, LM)
+function ADDBAN(S, LM)  %S是单元的刚度阵，LM是单元的总体刚度的坐标对应
 
 % Get global data
 global sdata;
@@ -33,7 +33,7 @@ for J = 1:ND
             if (II > 0)
                 if (JJ > II) KK = MAXA(JJ) + JJ - II;
                 else KK = MAXA(II) + II - JJ; end
-                STIFF(KK) = STIFF(KK) + S(I, J);
+                STIFF(KK) = STIFF(KK) + S(I, J);  %将单元刚度阵集成到总体刚度阵，STIFF只有上三角
             end
         end
     end

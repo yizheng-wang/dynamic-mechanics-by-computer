@@ -26,7 +26,7 @@ global sdata;
 global cdata;
 
 NEQ = sdata.NEQ; MHT = sdata.MHT;
-sdata.MAXA = zeros(NEQ+1, 1, 'int64');  %从存的数目来看，应该和KF有关系
+sdata.MAXA = zeros(NEQ+1, 1, 'int64');  %对角线元素的地址
 MAXA = sdata.MAXA;
 
 MAXA(1) = 1;
@@ -36,12 +36,12 @@ MK = 0;
 if (NEQ > 1)
     for I = 2:NEQ
         if (MHT(I) > MK) MK = MHT(I); end
-        MAXA(I+1) = MAXA(I) + MHT(I) + 1;
+        MAXA(I+1) = MAXA(I) + MHT(I) + 1; %通过列高来计算对角线元素的地址
     end
 end
 
-sdata.MK = MK + 1;
-sdata.NWK = MAXA(NEQ+1) - MAXA(1);
+sdata.MK = MK + 1;  %最大半带宽
+sdata.NWK = MAXA(NEQ+1) - MAXA(1);  %K中skyline一共多少个元素
 sdata.MAXA = MAXA;
 
 % Write total system data

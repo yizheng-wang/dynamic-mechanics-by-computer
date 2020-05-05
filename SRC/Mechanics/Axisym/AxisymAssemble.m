@@ -64,18 +64,25 @@ end
     
     
     for LX=1:NINT  
-        RI=XG(LX,NINT); %将高斯积分点取出，这里的规律是先列扫描
+        RI = XG(LX,NINT); %将高斯积分点取出，这里的规律是先列扫描
+     
         for LY=1:NINT
             SI=XG(LY,NINT);
             
             [B,DET,rphy]=generateBAD(RI,SI,XX);  %通过输入高斯积分点的位置，得到每个高斯积分点的B和行列式，这里的XX是有东西额，但是B没东西
             
             WT = WGT(LX,NINT)*WGT(LY,NINT)*DET*2*pi*rphy;%得到总权重
-            S=S+B'*D*B*WT;
-            
-        end
+            S=S+B'*D*B*WT;    
+        end   
     end
-    %S=2*pi*rave*S;
+   %质量矩阵，要考虑积分点的权重
+    for L = 1 : 8  
+          WT = 2 * pi * rphy ;
+          M  = M + N'* N * WT;
+    end
+    
+    
+    
     %%这里是轴对称单元，所以单元的K矩阵需要乘以2*pi*r在循环中乘过了，以后可以乘以2pi，来减少程序的循环量
     ADDBAN(S, LM(:, N));
 end    

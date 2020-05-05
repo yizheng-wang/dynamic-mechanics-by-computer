@@ -18,13 +18,13 @@
 %*                                                                 *
 %* *****************************************************************
 
-function ColHt(LM)
+function ColHt(LM) %每个单元的LM，这仅仅是一列
 
 % Get global data
 global sdata;
-MHT = sdata.MHT;
-LS = min(LM(LM ~= 0));
-ND = sdata.NDOF * sdata.NNODE;
+MHT = sdata.MHT;%MHT中一共有K阶元素
+LS = min(LM(LM ~= 0)); %LM中最小的元素
+ND = sdata.NDOF * sdata.NNODE; %单元自由度，LM的长度
 for I = 1:ND
     II = LM(I);
     if (II ~= 0)

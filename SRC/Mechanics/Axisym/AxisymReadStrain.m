@@ -57,10 +57,11 @@ sdata.E = zeros(NUMMAT, 1, 'double');
 sdata.AREA = zeros(NUMMAT, 1, 'double');
 for I = 1:cdata.NPAR(3)
     tmp = str2num(fgetl(IIN));
-    N = round(tmp(1));
+    N = round(tmp(1));  %最近的整数
     sdata.E(N) = tmp(2);
     sdata.PR(N) = tmp(3);
-    sdata.NINT(N) = tmp(4);  %将平面单元的厚度删除，仅仅保存高斯积分点，这里用的是减缩积分
+    sdata.density(N) = tmp(4);
+    sdata.NINT(N) = tmp(5);  %将平面单元的厚度删除，仅仅保存高斯积分点，这里用的是减缩积分
  %下面的fprintf也就进行了修改，仅仅输出上面的几个元素，将tmp（5）删除了
     fprintf(IOUT, '%5d    %12.5e        %2.1f       %14.6e \n', N, tmp(2), tmp(3), tmp(4));
 end
@@ -143,7 +144,7 @@ for N = 1:NUME
     LM(14, N) = ID(2, C);
     LM(16, N) = ID(2, D); 
 %   Updata column heights and bandwidth
-    ColHt(LM(:, N))
+    ColHt(LM(:, N))  %计算MHT
 end
 sdata.XYZ = XYZ; sdata.MATP = MATP; sdata.LM = LM;
 
