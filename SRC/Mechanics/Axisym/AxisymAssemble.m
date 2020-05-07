@@ -21,12 +21,14 @@ global sdata;
 global cdata;
 
 sdata.STIFF = zeros(sdata.NWK, 1, 'double');
+sdata.MASS = zeros(sdata.NWK, 1, 'double'); %M矩阵一样的处理
 NUME = sdata.NUME; MATP = sdata.MATP; XYZ = sdata.XYZ; 
 EN = sdata.E; AREA = sdata.AREA; LM = sdata.LM; NINT = sdata.NINT;
-PRN = sdata.PR; IOUT = cdata.IOUT;
+PRN = sdata.PR; IOUT = cdata.IOUT;density = sdata.density;
 
 for N = 1:NUME
     S = zeros(16, 16, 'double');  %S是刚度矩阵，将8*8改成16*16
+    M = zeros(16, 16, 'double');  %M是刚度矩阵，将8*8改成16*16
     XX = zeros(2, 8, 'double');    %XX是坐标，从2*4改成2*8
     B = zeros(4, 16, 'double');   %这是应变矩阵，从3*8改成4*16
     DB = zeros(3, 'double');     %没看懂这里，好像后面并没有用到
@@ -61,7 +63,15 @@ end
                          NU 1-NU 0 NU;...
                          0 0 (1-2*NU)/2 0;...
                          NU NU 0 1-NU];
-    
+    point_position = [-1 -1;...    %这是节点的等参元坐标
+                       1 -1;...
+                       1  1;...
+                      -1  1;...
+                       0 -1;...
+                       1  0;...
+                       0  1;...
+                      -1  0;];                  
+    weight_point = [-0.3333, -0.3333, -0.3333, -0.3333, 1.3333, 1.3333, 1.3333, 1.3333] ;                 
     
     for LX=1:NINT  
         RI = XG(LX,NINT); %将高斯积分点取出，这里的规律是先列扫描
@@ -77,13 +87,15 @@ end
     end
    %质量矩阵，要考虑积分点的权重
     for L = 1 : 8  
-          WT = 2 * pi * rphy ;
-          M  = M + N'* N * WT;
+          [ Nmatrix, DET] = generateN( point_position(L, 1), point_position(L, 2), XX ) ;
+          M  = M + Nmatrix'* Nmatrix * DET * weight_point(L);
     end
+    M = 2 * pi * rave * density * M;
     
     
     
     %%这里是轴对称单元，所以单元的K矩阵需要乘以2*pi*r在循环中乘过了，以后可以乘以2pi，来减少程序的循环量
+    ADDBANMASS(M, LM(:, N));
     ADDBAN(S, LM(:, N));
 end    
 
