@@ -44,6 +44,7 @@ cdata.NUMEG = int64(tmp(2));
 cdata.NLCASE = int64(tmp(3));
 cdata.MODEX = int64(tmp(4));
 
+
 if (cdata.NUMNP == 0) return; end
 
 %% Read nodal point data

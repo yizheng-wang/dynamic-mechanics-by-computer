@@ -62,6 +62,7 @@ for I = 1:cdata.NPAR(3)
     sdata.PR(N) = tmp(3);
     sdata.density(N) = tmp(4);
     sdata.NINT(N) = tmp(5);  %将平面单元的厚度删除，仅仅保存高斯积分点，这里用的是减缩积分
+    sdata.masschoose = round(tmp(6)); %质量矩阵的生成方式。
  %下面的fprintf也就进行了修改，仅仅输出上面的几个元素，将tmp（5）删除了
     fprintf(IOUT, '%5d    %12.5e        %2.1f       %14.6e \n', N, tmp(2), tmp(3), tmp(4));
 end

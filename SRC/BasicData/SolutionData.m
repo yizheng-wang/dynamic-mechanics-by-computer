@@ -69,6 +69,7 @@ classdef SolutionData
         MAXA;     % int, MAXA(NEQ),对角线元素的地址
         STIFF;    % double ,STIFF(NWK), store the elements of stiffness matrix
         MASS;    %协调质量阵
+        masschoose; %生成质量矩阵的方式，1和3，1-是协调质量阵行和，3是节点积分。
 
         % Result data
         DIS;      % double, DIS(NEQ, NLCASE), Displacement of nodes

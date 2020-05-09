@@ -25,6 +25,7 @@ sdata.MASS = zeros(sdata.NWK, 1, 'double'); %M矩阵一样的处理
 NUME = sdata.NUME; MATP = sdata.MATP; XYZ = sdata.XYZ; 
 EN = sdata.E; AREA = sdata.AREA; LM = sdata.LM; NINT = sdata.NINT;
 PRN = sdata.PR; IOUT = cdata.IOUT;density = sdata.density;
+masschoose = sdata.masschoose;
 
 for N = 1:NUME
     S = zeros(16, 16, 'double');  %S是刚度矩阵，将8*8改成16*16
@@ -86,12 +87,29 @@ end
         end   
     end
    %质量矩阵，要考虑积分点的权重
+   if masschoose == 3; %第三种节点积分的方式生成质量矩阵
     for L = 1 : 8  
           [ Nmatrix, DET] = generateN( point_position(L, 1), point_position(L, 2), XX ) ;
           M  = M + Nmatrix'* Nmatrix * DET * weight_point(L);
     end
     M = 2 * pi * rave * density * M;
     
+    
+   elseif masschoose == 1; %第一种行相加的方式生成质量矩阵
+    for LX=1:NINT  
+        RI = XG(LX,NINT); %将高斯积分点取出，这里的规律是先列扫描
+     
+        for LY=1:NINT
+            SI=XG(LY,NINT);
+            
+            [ Nmatrix, DET] = generateN( RI, SI, XX ) ;  %通过输入高斯积分点的位置，得到每个高斯积分点的B和行列式，这里的XX是有东西额，但是B没东西
+            WT = WGT(LX,NINT)*WGT(LY,NINT);
+            M  = M + Nmatrix'* Nmatrix * DET * WT;%得到总权重
+        end   
+    end
+     M = 2 * pi * rave * density * M;
+     M = diag(sum(M, 2)); 
+   end
     
     
     %%这里是轴对称单元，所以单元的K矩阵需要乘以2*pi*r在循环中乘过了，以后可以乘以2pi，来减少程序的循环量
